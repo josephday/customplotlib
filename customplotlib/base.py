@@ -207,12 +207,13 @@ class Customplotlib():
         
         pyplot.matshow(*args, **kwargs, cmap=cmap) 
         
-        #self.xticks(range(df.select_dtypes(['number']).shape[1]), df.select_dtypes(['number']).columns, fontsize=14, rotation=45)
-        #self.yticks(range(df.select_dtypes(['number']).shape[1]), df.select_dtypes(['number']).columns, fontsize=14)
+        df = args[0]
+        
+        self.xticks(range(df.select_dtypes(['number']).shape[1]), df.select_dtypes(['number']).columns, rotation=45)
+        self.yticks(range(df.select_dtypes(['number']).shape[1]), df.select_dtypes(['number']).columns)
         
         cb = self.colorbar()
-        #cb.ax.tick_params(labelsize=14)
-        
+
         if title:
             self.title(title)
         
