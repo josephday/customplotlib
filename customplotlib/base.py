@@ -14,7 +14,7 @@
 
 # +
 import matplotlib.pyplot as pyplot
-from matplotlib import font_manager
+from matplotlib import font_manager as fm
 from customplotlib.customization.config import *
 from customplotlib.customization import processing
 from cycler import cycler
@@ -23,6 +23,11 @@ import numpy as np
 import pandas as pd
 import os
 
+def format_str(string):
+    strings = string.split('_')
+    strings = [s.lower().capitalize() for s in strings]
+    return " ".join(strings)
+
     
 class Customplotlib():
     def __init__(self, supp_colors=False, color_blind_mode=False):
@@ -30,13 +35,13 @@ class Customplotlib():
         for i in dir(pyplot):
             if i not in ['scatter', 'plot', 'matshow']:
                 setattr(self, i, getattr(pyplot, i))
-            
-        font_dirs = ['customplotlib/customization/fonts/']
-        font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
+        
+        font_dirs = ['../customplotlib/customization/fonts/']
+        font_files = fm.findSystemFonts(fontpaths=font_dirs)
 
         for font_file in font_files:
-            font_manager.fontManager.addfont(font_file)
-        
+            fm.fontManager.addfont(font_file)
+            
         self.supp_colors = supp_colors
         if not self.supp_colors:
             self.colors = list(MAINS.values())
@@ -47,7 +52,7 @@ class Customplotlib():
         
         self.gradients = GRADIENTS
         
-        self.font = FONT.lower()
+        self.font = fm.FontProperties(fname=FONT)
         self.fontsize = FONTSIZE
         
         self.markersize = MARKERSIZE
@@ -66,9 +71,7 @@ class Customplotlib():
                                                 cycler(marker=MARKERSTYLES[:len(self.colors)])
                                                )
             
-            
-        
-        self.rcParams["font.family"] = self.font
+        self.rcParams["font.family"] = self.font.get_name()
         self.rcParams["font.size"] = self.fontsize
         self.rcParams["figure.figsize"] = self.figsize
         self.rcParams['lines.markersize'] = self.markersize
@@ -93,8 +96,9 @@ class Customplotlib():
                 data_df['x'] = data_df[input_x_name]
                 data_df['y'] = data_df[input_y_name]
 
-                xlabel = input_x_name if not xlabel else xlabel
-                ylabel = input_y_name if not ylabel else ylabel
+                xlabel = format_str(input_x_name) if not xlabel else xlabel
+                ylabel = format_str(input_y_name) if not ylabel else ylabel
+                title = ylabel + " by " + xlabel
                 
                 data_df.sort_values(by=kwargs.get('label'), inplace=True)
                 groups = data_df.groupby(kwargs.pop('label'), sort=True)
@@ -105,7 +109,8 @@ class Customplotlib():
                 data_df.sort_values(by='label', inplace=True)
                 groups = data_df.groupby('label', sort=True)
             
-            for name, group in groups:                
+            for name, group in groups: 
+                group.sort_values(by='x', inplace=True)
                 pyplot.plot(group.x, group.y, **kwargs, label=name)
 
         else:
@@ -150,8 +155,9 @@ class Customplotlib():
                 data_df['x'] = data_df[input_x_name]
                 data_df['y'] = data_df[input_y_name]
 
-                xlabel = input_x_name if not xlabel else xlabel
-                ylabel = input_y_name if not ylabel else ylabel
+                xlabel = format_str(input_x_name) if not xlabel else xlabel
+                ylabel = format_str(input_y_name) if not ylabel else ylabel
+                title = ylabel + " by " + xlabel
                 
                 data_df.sort_values(by=kwargs.get('label'), inplace=True)
                 groups = data_df.groupby(kwargs.pop('label'), sort=True)
@@ -196,7 +202,8 @@ class Customplotlib():
         
         title = kwargs.pop('title',False)
         xlabel = kwargs.pop('xlabel',False)
-        ylabel = kwargs.pop('ylabel',False)   
+        ylabel = kwargs.pop('ylabel',False)  
+        xtick_rot = kwargs.pop('xtick_rot',45)
         
         gradient = self.gradients[kwargs.pop('gradient', 'strong')]
         
@@ -209,7 +216,7 @@ class Customplotlib():
         
         df = args[0]
         
-        self.xticks(range(df.select_dtypes(['number']).shape[1]), df.select_dtypes(['number']).columns, rotation=45)
+        self.xticks(range(df.select_dtypes(['number']).shape[1]), df.select_dtypes(['number']).columns, rotation=xtick_rot)
         self.yticks(range(df.select_dtypes(['number']).shape[1]), df.select_dtypes(['number']).columns)
         
         cb = self.colorbar()

@@ -23,9 +23,9 @@ AUTOSAVE = True
 
 ### font
 # download .ttf for your desired font and place at customplotlib/customization/fonts/
-FONT = 'Calibri'
+FONT = '../customplotlib/customization/fonts/proxima_nova.ttf'
 FONTSIZE = 16
-LEGEND_LOC = (1.25,0.65)
+LEGEND_LOC = (1.05,0.65)
 
 
 
