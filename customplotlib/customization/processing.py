@@ -19,8 +19,8 @@ import os
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
-from customplotlib.customization.colors import MAINS, SUPPS
-from customplotlib.customization.colors import GRADIENT_LIGHT_DARK, GRADIENT_HOT_COLD, GRADIENT_RAINBOW, GRADIENT_BW
+from customplotlib.customization.config import MAINS, SUPPS
+from customplotlib.customization.config import GRADIENT_LIGHT_DARK, GRADIENT_HOT_COLD, GRADIENT_RAINBOW, GRADIENT_BW
 
 
 # +
