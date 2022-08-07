@@ -47,15 +47,15 @@ MAINS['strong-off-white'] = '#F4F4F4'
 SUPPS = OrderedDict()
 
 SUPPS['strong-blue'] = "#4C6FE7"
-SUPPS['red'] = "#DE364F"
-SUPPS['orange'] = "#FFC65F"
-SUPPS['green'] = "#1FC198"
-SUPPS['purple'] = '#D065D3'
-SUPPS['yellow'] = '#F9F871'
-SUPPS['dark-orange'] = '#D24B00'
-SUPPS['dark-green'] = '#008A65'
-SUPPS['light-purple']= '#A5A7DD'
-SUPPS['dark-red'] = '#9F0023'
+SUPPS['strong-red'] = "#DE364F"
+SUPPS['strong-orange'] = "#FFC65F"
+SUPPS['strong-green'] = "#1FC198"
+SUPPS['strong-purple'] = '#D065D3'
+SUPPS['strong-yellow'] = '#F9F871'
+SUPPS['strong-dark-orange'] = '#D24B00'
+SUPPS['strong-dark-green'] = '#008A65'
+SUPPS['strong-light-purple']= '#A5A7DD'
+SUPPS['strong-dark-red'] = '#9F0023'
 
 # +
 ### pre-defined gradients

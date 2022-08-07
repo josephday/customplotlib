@@ -79,6 +79,12 @@ class Customplotlib():
     
     def plot(self, **kwargs):
         
+        color = kwargs.pop('color', None)
+        if color in list(MAINS.keys()):
+            color = MAINS[color]
+        elif color in list(SUPPS.keys()):
+            color = SUPPS[color]
+        
         title = kwargs.pop('title',False)
         xlabel = kwargs.pop('xlabel',False)
         ylabel = kwargs.pop('ylabel',False)
@@ -112,12 +118,12 @@ class Customplotlib():
             
             for name, group in groups: 
                 group.sort_values(by='x', inplace=True)
-                pyplot.plot(group.x, group.y, **kwargs, label=name)
+                pyplot.plot(group.x, group.y, **kwargs, label=name, color=color)
 
         else:
             x = kwargs.pop('x', None)
             y = kwargs.pop('y', None)
-            pyplot.plot(x,y,**kwargs)
+            pyplot.plot(x,y,**kwargs, color=color)
         
         if legend:
             handles, labels = self.gca().get_legend_handles_labels()
@@ -139,6 +145,12 @@ class Customplotlib():
             pyplot.savefig(FIGSAVEPATH + datetime.now().strftime("%m-%d-%Y-%H:%M:%S.png"), bbox_inches='tight')
             
     def scatter(self, *args, **kwargs):
+        
+        color = kwargs.pop('color', None)
+        if color in list(MAINS.keys()):
+            color = MAINS[color]
+        elif color in list(SUPPS.keys()):
+            color = SUPPS[color]
         
         title = kwargs.pop('title',False)
         xlabel = kwargs.pop('xlabel',False)
@@ -176,10 +188,10 @@ class Customplotlib():
                 if self.color_blind_mode:
                     kwargs['marker'] = next(self.gca()._get_lines.prop_cycler)['marker']
                 
-                pyplot.scatter(*args, **kwargs, x=group.x, y=group.y, label=name)
+                pyplot.scatter(*args, **kwargs, x=group.x, y=group.y, label=name, color=color)
 
         else:
-            pyplot.scatter(*args, **kwargs)
+            pyplot.scatter(*args, **kwargs, color=color)
         
         if legend:
             handles, labels = self.gca().get_legend_handles_labels()
