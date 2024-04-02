@@ -27,6 +27,7 @@ setuptools.setup(
         'numpy',
         'pandas',
         'seaborn',
+        'plotly',
     ],
     packages=setuptools.find_packages(include='customplotlib.*'),
     zip_safe=False
